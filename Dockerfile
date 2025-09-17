@@ -1,7 +1,10 @@
 FROM node:20-bookworm
 
-# Install Docker CLI
-RUN apt-get update && apt-get install -y docker.io && rm -rf /var/lib/apt/lists/*
+ENV DOCKERVERSION=26.0.0-ce
+RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKERVERSION}.tgz \
+  && tar xzvf docker-${DOCKERVERSION}.tgz --strip 1 \
+                 -C /usr/local/bin docker/docker \
+  && rm docker-${DOCKERVERSION}.tgz
 
 WORKDIR /app
 CMD ["node"]
